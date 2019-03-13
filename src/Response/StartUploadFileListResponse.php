@@ -3,6 +3,7 @@
 namespace AsisTeam\CSOBBC\Response;
 
 use AsisTeam\CSOBBC\Entity\IFile;
+use AsisTeam\CSOBBC\Enum\FileStatusEnum;
 use AsisTeam\CSOBBC\Exception\LogicalException;
 use AsisTeam\CSOBBC\Exception\Runtime\ResponseException;
 use stdClass;
@@ -29,9 +30,13 @@ final class StartUploadFileListResponse extends AbstractResponse
 	{
 		self::assertResponse($resp);
 
-		if (isset($resp->FileList->FileUrl) && is_array($resp->FileList->FileUrl)) {
-			foreach ($resp->FileList->FileUrl as $f) {
-				self::findAndUpdateOriginalFile((array) $f, $originalFiles);
+		if (isset($resp->FileList->FileUrl)) {
+			if (is_array($resp->FileList->FileUrl)) {
+				foreach ($resp->FileList->FileUrl as $f) {
+					self::findAndUpdateOriginalFile((array) $f, $originalFiles);
+				}
+			} else {
+				self::findAndUpdateOriginalFile((array) $resp->FileList->FileUrl, $originalFiles);
 			}
 		}
 
@@ -58,12 +63,16 @@ final class StartUploadFileListResponse extends AbstractResponse
 			throw new ResponseException('Received file does not contain valid hash');
 		}
 
-		if (!isset($data['Url'])) {
-			throw new ResponseException('Received file does not contain valid url');
-		}
-
 		if (!isset($data['Status'])) {
 			throw new ResponseException('Received file does not contain valid status');
+		}
+
+		if ($data['Status'] !== FileStatusEnum::UPLOAD_AVAILABLE) {
+			throw new ResponseException(sprintf('Received file upload status is "%s". Expecting "%s"', $data['Status'], FileStatusEnum::UPLOAD_AVAILABLE));
+		}
+
+		if (!isset($data['Url'])) {
+			throw new ResponseException('Received file does not contain valid url');
 		}
 
 		foreach ($originalFiles as $original) {
