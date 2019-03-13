@@ -45,7 +45,7 @@ class BCSoapTestClient extends AbstractTestClient
 		$filter = new Filter();
 		$filter->setCreatedBefore(new DateTimeImmutable('2019-02-05 10:55:00'));
 		$filter->setFileName('test.pdf');
-		$filter->setFileTypes([FileTypeEnum::IMPORT, FileTypeEnum::VYPIS]);
+		$filter->setFileTypes([FileTypeEnum::IMPPROT, FileTypeEnum::VYPIS]);
 
 		$this->assertNonEmptyGetDownloadFileList($this->soapClient->getFiles(null, $filter));
 	}

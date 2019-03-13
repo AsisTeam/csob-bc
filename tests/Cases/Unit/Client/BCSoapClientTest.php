@@ -22,7 +22,7 @@ class BCSoapClientTest extends TestCase
 
 		$resp = $client->getFiles();
 
-		Assert::equal('2019-02-05 21:57:32', $resp->getDate()->format('Y-m-d H:i:s'));
+		Assert::equal('2019-02-05T21:57:32.855', $resp->getQueryTimestamp());
 		Assert::equal('CBAPIceb-int19020521573282700183', $resp->getTicketId());
 		Assert::true(count($resp->getFiles()) > 0);
 

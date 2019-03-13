@@ -10,7 +10,6 @@ use AsisTeam\CSOBBC\Request\Filter;
 use AsisTeam\CSOBBC\Response\FinishUploadFileListResponse;
 use AsisTeam\CSOBBC\Response\GetDownloadFileListResponse;
 use AsisTeam\CSOBBC\Response\StartUploadFileListResponse;
-use DateTimeImmutable;
 use SoapClient;
 use SoapFault;
 
@@ -30,18 +29,18 @@ class BCSoapClient
 
 	public function __construct(SoapClient $client, string $contractNo, string $clientAppGuid)
 	{
-		$this->client = $client;
-		$this->contractNo = $contractNo;
+		$this->client        = $client;
+		$this->contractNo    = $contractNo;
 		$this->clientAppGuid = $clientAppGuid;
 	}
 
 	public function getFiles(
-		?DateTimeImmutable $since = null,
+		?string $prevQueryTimestamp = null,
 		?Filter $filter = null
 	): GetDownloadFileListResponse
 	{
 		try {
-			$opts = $this->prepareGetFilesOpts($since, $filter);
+			$opts = $this->prepareGetFilesOpts($prevQueryTimestamp, $filter);
 			$resp = $this->client->GetDownloadFileList_v2($opts);
 
 			return GetDownloadFileListResponse::fromResponse($resp);
@@ -83,19 +82,46 @@ class BCSoapClient
 	/**
 	 * @return mixed[]
 	 */
-	private function prepareGetFilesOpts(
-		?DateTimeImmutable $since = null,
-		?Filter $filter = null
-	): array
+	private function prepareGetFilesOpts(?string $prevQueryTimestamp = null, ?Filter $filter = null): array
 	{
-		$opts = ['ContractNumber' => $this->contractNo];
+		// defaults options
+		$opts = [
+			'ContractNumber' => $this->contractNo,
+			'Filter'         => [
+				'ClientAppGuid' => $this->clientAppGuid,
+			],
+		];
 
-		if ($since !== null) {
-			$opts['PrevQueryTimestamp'] = $since->format(self::API_DATE_FORMAT);
+		if ($prevQueryTimestamp !== null) {
+			$opts['PrevQueryTimestamp'] = $prevQueryTimestamp;
 		}
 
 		if ($filter !== null) {
-			$opts = array_merge($opts, $filter->toArray());
+			// file types filter
+			if (is_array($filter->getFileTypes())) {
+				$opts['Filter']['FileTypes'] = [];
+				foreach ($filter->getFileTypes() as $fType) {
+					$opts['Filter']['FileTypes'][] = $fType;
+				}
+			}
+
+			// file name filter
+			if ($filter->getFileName() !== null) {
+				$opts['Filter']['FileName'] = $filter->getFileName();
+			}
+
+			// file creation dates
+			if ($filter->getCreatedBefore() !== null) {
+				$opts['Filter']['CreatedBefore'] = $filter->getCreatedBefore()->format(self::API_DATE_FORMAT);
+			}
+			if ($filter->getCreatedAfter() !== null) {
+				$opts['Filter']['CreatedAfter'] = $filter->getCreatedAfter()->format(self::API_DATE_FORMAT);
+			}
+
+			// override ClientAppGuid if given in filter
+			if ($filter->getClientAppGuid() !== null) {
+				$opts['Filter']['ClientAppGuid'] = $filter->getClientAppGuid();
+			}
 		}
 
 		return $opts;
@@ -131,10 +157,10 @@ class BCSoapClient
 	{
 		$a = [
 			'Filename' => $f->getFileName(),
-			'Hash' => $f->getHash(),
-			'Size' => $f->getSize(),
-			'Format' => $f->getFormat(),
-			'Mode' => $f->getUploadMode(),
+			'Hash'     => $f->getHash(),
+			'Size'     => $f->getSize(),
+			'Format'   => $f->getFormat(),
+			'Mode'     => $f->getUploadMode(),
 		];
 
 		if ($f->getSeparator() !== null) {
@@ -165,8 +191,8 @@ class BCSoapClient
 			}
 
 			$opts['FileList']['FileId'][] = [
-				'Filename' => $upFile->getFileName(),
-				'Hash' => $upFile->getHash(),
+				'Filename'  => $upFile->getFileName(),
+				'Hash'      => $upFile->getHash(),
 				'NewFileId' => $upFile->getUpload()->getFileId(),
 			];
 		}

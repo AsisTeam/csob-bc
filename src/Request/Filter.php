@@ -2,7 +2,6 @@
 
 namespace AsisTeam\CSOBBC\Request;
 
-use AsisTeam\CSOBBC\Client\BCSoapClient;
 use AsisTeam\CSOBBC\Enum\FileTypeEnum;
 use AsisTeam\CSOBBC\Exception\Logical\InvalidArgumentException;
 use DateTimeImmutable;
@@ -24,39 +23,6 @@ final class Filter
 
 	/** @var string|null */
 	private $clientAppGuid;
-
-	/**
-	 * @return mixed[]
-	 */
-	public function toArray(): array
-	{
-		$a = [];
-
-		if ($this->fileTypes !== null) {
-			$a['FileTypes'] = [];
-			foreach ($this->fileTypes as $fType) {
-				$a['FileTypes'][] = $fType;
-			}
-		}
-
-		if ($this->fileName !== null) {
-			$a['FileName'] = $this->fileName;
-		}
-
-		if ($this->createdBefore !== null) {
-			$a['CreatedBefore'] = $this->createdBefore->format(BCSoapClient::API_DATE_FORMAT);
-		}
-
-		if ($this->createdAfter !== null) {
-			$a['CreatedAfter'] = $this->createdAfter->format(BCSoapClient::API_DATE_FORMAT);
-		}
-
-		if ($this->clientAppGuid !== null) {
-			$a['ClientAppGuid'] = $this->clientAppGuid;
-		}
-
-		return $a;
-	}
 
 	/**
 	 * @return string[]

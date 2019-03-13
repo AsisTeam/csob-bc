@@ -5,17 +5,17 @@ namespace AsisTeam\CSOBBC\Enum;
 final class FileTypeEnum
 {
 
-	public const VYPIS  = 'VYPIS';
-	public const AVIZO  = 'AVIZO';
-	public const KURZY  = 'KURZY';
-	public const IMPORT = 'IMPORT';
+	public const VYPIS   = 'VYPIS';
+	public const AVIZO   = 'AVIZO';
+	public const KURZY   = 'KURZY';
+	public const IMPPROT = 'IMPPROT';
 
 	public static function isValid(string $value): bool
 	{
 		return $value === self::VYPIS ||
 			$value === self::AVIZO ||
 			$value === self::KURZY ||
-			$value === self::IMPORT;
+			$value === self::IMPPROT;
 	}
 
 }

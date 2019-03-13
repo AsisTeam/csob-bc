@@ -11,8 +11,8 @@ use stdClass;
 final class GetDownloadFileListResponse extends AbstractResponse
 {
 
-	/** @var DateTimeImmutable */
-	private $date;
+	/** @var string */
+	private $queryTimestamp;
 
 	/** @var IFile[] */
 	private $files = [];
@@ -20,16 +20,16 @@ final class GetDownloadFileListResponse extends AbstractResponse
 	/**
 	 * @param IFile[] $files
 	 */
-	public function __construct(DateTimeImmutable $date, string $ticketId, array $files)
+	public function __construct(string $queryTimestamp, string $ticketId, array $files)
 	{
-		$this->date     = $date;
-		$this->ticketId = $ticketId;
-		$this->files    = $files;
+		$this->queryTimestamp = $queryTimestamp;
+		$this->ticketId       = $ticketId;
+		$this->files          = $files;
 	}
 
-	public function getDate(): DateTimeImmutable
+	public function getQueryTimestamp(): string
 	{
-		return $this->date;
+		return $this->queryTimestamp;
 	}
 
 	/**
@@ -55,9 +55,7 @@ final class GetDownloadFileListResponse extends AbstractResponse
 			}
 		}
 
-		$date = new DateTimeImmutable($resp->QueryTimestamp);
-
-		return new self($date, (string) $resp->TicketId, $files);
+		return new self((string) $resp->QueryTimestamp, (string) $resp->TicketId, $files);
 	}
 
 	/**

@@ -5,7 +5,6 @@ namespace AsisTeam\CSOBBC\Client;
 use AsisTeam\CSOBBC\Entity\IFile;
 use AsisTeam\CSOBBC\Request\Filter;
 use AsisTeam\CSOBBC\Response\GetDownloadFileListResponse;
-use DateTimeImmutable;
 
 final class BCClientFacade
 {
@@ -22,12 +21,9 @@ final class BCClientFacade
 		$this->httpClient = $httpClient;
 	}
 
-	public function listFiles(
-		?DateTimeImmutable $since = null,
-		?Filter $filter = null
-	): GetDownloadFileListResponse
+	public function listFiles(?string $prevQueryDatetime = null, ?Filter $filter = null): GetDownloadFileListResponse
 	{
-		return $this->soapClient->getFiles($since, $filter);
+		return $this->soapClient->getFiles($prevQueryDatetime, $filter);
 	}
 
 	public function download(string $url): string

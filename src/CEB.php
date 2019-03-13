@@ -12,7 +12,6 @@ use AsisTeam\CSOBBC\Generator\FileGenerator;
 use AsisTeam\CSOBBC\Reader\FileReader;
 use AsisTeam\CSOBBC\Request\Filter;
 use AsisTeam\CSOBBC\Response\GetDownloadFileListResponse;
-use DateTimeImmutable;
 
 final class CEB
 {
@@ -53,9 +52,9 @@ final class CEB
 		$this->api->upload($files);
 	}
 
-	public function listFiles(?DateTimeImmutable $since = null, ?Filter $filter = null): GetDownloadFileListResponse
+	public function listFiles(?string $prevQueryDatetime = null, ?Filter $filter = null): GetDownloadFileListResponse
 	{
-		return $this->api->listFiles($since, $filter);
+		return $this->api->listFiles($prevQueryDatetime, $filter);
 	}
 
 	/**
