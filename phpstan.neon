@@ -1,0 +1,15 @@
+includes:
+	- temp/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- temp/phpstan/vendor/phpstan/phpstan-nette/extension.neon
+	- temp/phpstan/vendor/phpstan/phpstan-nette/rules.neon
+	- temp/phpstan/vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+	ignoreErrors:
+		- '#.+undefined method SoapClient::GetDownloadFileList_v2().+#'
+		- '#.+undefined method SoapClient::StartUploadFileList_v1().+#'
+		- '#.+undefined method SoapClient::FinishUploadFileList_v1().+#'
+		- '#.+comparison using === between string and false#'
+
+	excludes_analyse:
+		- src/Generator/Payment/Impl/TxtGenerator.php

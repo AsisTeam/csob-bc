@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/CEBBCError_v2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/CEBBCError_v2" elementFormDefault="qualified">
+	<xs:element name="CEBBCError" type="tns:CEBBCError_v2"/>
+	<xs:complexType name="CEBBCError_v2">
+		<xs:sequence>
+			<xs:element name="Code" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Text" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Error message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TicketId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique identification of request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by KBC Group NV (KBC Group NV) -->
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1" elementFormDefault="qualified">
+	<xs:element name="StartUploadFileListRequest_v1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ContractNumber" type="xs:long">
+					<xs:annotation>
+						<xs:documentation>Identification of the Contract.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ClientAppGuid">
+					<xs:annotation>
+						<xs:documentation>Globally unique identification of application instance which is performing request.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="36"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="FileList">
+					<xs:annotation>
+						<xs:documentation>List of files prepared for upload.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ImportFileDetail" type="tns:ImportFileDetail_v1" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImportFileDetail_v1">
+		<xs:sequence>
+			<xs:element name="Filename">
+				<xs:annotation>
+					<xs:documentation>Filename of the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="250"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Hash">
+				<xs:annotation>
+					<xs:documentation>MD5 hash computed from the file contents.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Size">
+				<xs:annotation>
+					<xs:documentation>Size of the file in bytes.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="9999999999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Format">
+				<xs:annotation>
+					<xs:documentation>Type of the file (ABO, TXT, CSV,...).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Separator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Field separator used. Left out when fixed format used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Mode">
+				<xs:annotation>
+					<xs:documentation>How to process errors (IncludeIncorrect, OnlyCorrect, AllOrNothing, SignedAllOrNothing).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,75 @@
+{
+  "name": "asisteam/csob-bc",
+  "description": "CSOB Business Connector - for download/upload files automation",
+  "keywords": ["CSOB", "Business Connector", "API"],
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/AsisTeam/csob-bc",
+  "authors": [
+    {
+      "name": "Tomas Sedlacek",
+      "homepage": "http://kedlas.cz"
+    }
+  ],
+  "require": {
+    "ext-soap": "*",
+    "php": ">= 7.1",
+    "nette/di": "^2.4",
+    "guzzlehttp/guzzle": "^6.3",
+    "ext-curl": "*",
+    "ext-iconv": "*",
+    "moneyphp/money": "^3.2",
+    "ext-simplexml": "*",
+    "ext-libxml": "*"
+  },
+  "require-dev": {
+    "ninjify/qa": "^0.8.0",
+    "ninjify/nunjuck": "^0.2.0",
+    "mockery/mockery": "^1.2",
+    "ext-simplexml": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "AsisTeam\\CSOBBC\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AsisTeam\\CSOBBC\\Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "qa": [
+      "linter src tests",
+      "codesniffer src tests"
+    ],
+    "tests": [
+      "tester -s -p php --colors 1 -C tests/Cases"
+    ],
+    "coverage": [
+      "tester -s -p phpdbg --colors 1 -C --coverage ./coverage.xml --coverage-src ./src tests/Cases"
+    ],
+    "phpstan-install": [
+      "mkdir -p temp/phpstan",
+      "composer require -d temp/phpstan phpstan/phpstan:^0.10",
+      "composer require -d temp/phpstan phpstan/phpstan-deprecation-rules:^0.10",
+      "composer require -d temp/phpstan phpstan/phpstan-nette:^0.10",
+      "composer require -d temp/phpstan phpstan/phpstan-strict-rules:^0.10"
+    ],
+    "phpstan": [
+      "temp/phpstan/vendor/bin/phpstan analyse -l max -c phpstan.neon src"
+    ],
+    "ci": [
+      "composer qa",
+      "composer phpstan",
+      "composer tests"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "0.1.x-dev"
+    }
+  }
+}

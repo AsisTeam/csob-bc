@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by KBC Group NV (KBC Group NV) -->
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2" elementFormDefault="qualified">
+	<xs:element name="GetDownloadFileListRequest_v2">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ContractNumber" type="xs:long">
+					<xs:annotation>
+						<xs:documentation>Identification of the Contract.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrevQueryTimestamp" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Timestamp of request returned by previous call of this service or given by client.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Filter" type="tns:FileCriteria_v1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of conditions constraining the list of files returned. All conditions must match.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FileCriteria_v1">
+		<xs:sequence>
+			<xs:element name="FileTypes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>List of types of download file.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="FileType" type="xs:token" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Type of file (AVIZO, VYPIS, KURZY)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="Unique_FileType">
+					<xs:selector xpath="tns:FileType"/>
+					<xs:field xpath="."/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="FileName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Filename incl. extension.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreatedAfter" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Only files created on or after the given date and time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreatedBefore" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Only files created before the given date and time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClientAppGuid" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Also files created for specified client application instance (e.g. import protocols).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="36"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

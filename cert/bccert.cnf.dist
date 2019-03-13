@@ -1,0 +1,10 @@
+[ req ]
+default_bits = 2048
+default_md = sha256
+distinguished_name = req_distinguished_name
+prompt = no
+string_mask = nombstr
+encrypt_key = no
+[ req_distinguished_name ]
+C = CZ
+CN = <BC server>

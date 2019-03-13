@@ -1,0 +1,17 @@
+<StartUploadFileListResponse_v1>
+	<FileList>
+		<FileUrl>
+			<Filename>example1.txt</Filename>
+			<Hash>dbbc21ea6bf44805b244ebccf5c49a42</Hash>
+			<Status>U</Status>
+			<Url>https://testceb-bc.csob.cz/ceb-mock/upload?type=IncludeIncorrect&amp;size=5000</Url>
+		</FileUrl>
+		<FileUrl>
+			<Filename>CustomName.txt</Filename>
+			<Hash>04fa99859f283286f1e33c6bc6434c16</Hash>
+			<Status>U</Status>
+			<Url>https://testceb-bc.csob.cz/ceb-mock/upload?type=IncludeIncorrect&amp;size=5000</Url>
+		</FileUrl>
+	</FileList>
+	<TicketId>CBAPIceb-int19020617260621200253</TicketId>
+</StartUploadFileListResponse_v1>

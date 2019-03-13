@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by KBC Group NV (KBC Group NV) -->
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1" elementFormDefault="qualified">
+	<xs:element name="StartUploadFileListResponse_v1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FileList">
+					<xs:annotation>
+						<xs:documentation>List of files with URLs for upload.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FileUrl" type="tns:FileUrl_v1" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TicketId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Unique identification of request</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FileUrl_v1">
+		<xs:sequence>
+			<xs:element name="Filename">
+				<xs:annotation>
+					<xs:documentation>Filename of the file. Echoed back from request to identify the record.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="250"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Hash">
+				<xs:annotation>
+					<xs:documentation>MD5 hash computed from the file contents. Echoed back from request to identify the record.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Status">
+				<xs:annotation>
+					<xs:documentation>Processing result for particular file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="U">
+							<xs:annotation>
+								<xs:documentation>Proceed to upload the file using URL in Url element.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="R">
+							<xs:annotation>
+								<xs:documentation>Rejected. e.g. the file is already processed.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Url" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Download URL of the file, when file is ready to be downloaded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

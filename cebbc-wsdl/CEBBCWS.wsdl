@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS"
+	xmlns:msg_getdownloadfilelist_v2="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2"
+	xmlns:msg_startuploadfilelist_v1="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1"
+	xmlns:msg_finishuploadfilelist_v1="http://ceb-bc.csob.cz/CEBBCWS/FinishUploadFileList_v1"
+	xmlns:error_v2="http://ceb-bc.csob.cz/CEBBCWS/CEBBCError_v2">
+	<wsp:Policy wsu:Id="BasicHttpBinding_CEBBCWS_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="true"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xs:schema targetNamespace="http://ceb-bc.csob.cz/CEBBCWS" elementFormDefault="qualified">
+			<xs:import schemaLocation="./GetDownloadFileListRequest_v2.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2"/>
+			<xs:import schemaLocation="./GetDownloadFileListResponse_v2.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2"/>
+			<xs:import schemaLocation="./StartUploadFileListRequest_v1.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1"/>
+			<xs:import schemaLocation="./StartUploadFileListResponse_v1.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/StartUploadFileList_v1"/>
+			<xs:import schemaLocation="./FinishUploadFileListRequest_v1.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/FinishUploadFileList_v1"/>
+			<xs:import schemaLocation="./FinishUploadFileListResponse_v1.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/FinishUploadFileList_v1"/>
+			<xs:import schemaLocation="./CEBBCError_v2.xsd" namespace="http://ceb-bc.csob.cz/CEBBCWS/CEBBCError_v2"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="GetDownloadFileListRequest_v2">
+		<wsdl:part name="parameter" element="msg_getdownloadfilelist_v2:GetDownloadFileListRequest_v2"/>
+	</wsdl:message>
+	<wsdl:message name="GetDownloadFileListResponse_v2">
+		<wsdl:part name="parameter" element="msg_getdownloadfilelist_v2:GetDownloadFileListResponse_v2"/>
+	</wsdl:message>
+	<wsdl:message name="StartUploadFileListRequest_v1">
+		<wsdl:part name="parameter" element="msg_startuploadfilelist_v1:StartUploadFileListRequest_v1"/>
+	</wsdl:message>
+	<wsdl:message name="StartUploadFileListResponse_v1">
+		<wsdl:part name="parameter" element="msg_startuploadfilelist_v1:StartUploadFileListResponse_v1"/>
+	</wsdl:message>
+	<wsdl:message name="FinishUploadFileListRequest_v1">
+		<wsdl:part name="parameter" element="msg_finishuploadfilelist_v1:FinishUploadFileListRequest_v1"/>
+	</wsdl:message>
+	<wsdl:message name="FinishUploadFileListResponse_v1">
+		<wsdl:part name="parameter" element="msg_finishuploadfilelist_v1:FinishUploadFileListResponse_v1"/>
+	</wsdl:message>
+	<wsdl:message name="CEBBCError_v2">
+		<wsdl:part name="CEBBCError_v2" element="error_v2:CEBBCError"/>
+	</wsdl:message>
+	<wsdl:portType name="CEBBCWSPortType">
+		<wsdl:operation name="GetDownloadFileList_v2">
+			<wsdl:input message="tns:GetDownloadFileListRequest_v2"/>
+			<wsdl:output message="tns:GetDownloadFileListResponse_v2"/>
+			<wsdl:fault message="tns:CEBBCError_v2" name="CEBBCError_v2"/>
+		</wsdl:operation>
+		<wsdl:operation name="StartUploadFileList_v1">
+			<wsdl:input message="tns:StartUploadFileListRequest_v1"/>
+			<wsdl:output message="tns:StartUploadFileListResponse_v1"/>
+			<wsdl:fault message="tns:CEBBCError_v2" name="CEBBCError_v2"/>
+		</wsdl:operation>
+		<wsdl:operation name="FinishUploadFileList_v1">
+			<wsdl:input message="tns:FinishUploadFileListRequest_v1"/>
+			<wsdl:output message="tns:FinishUploadFileListResponse_v1"/>
+			<wsdl:fault message="tns:CEBBCError_v2" name="CEBBCError_v2"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CEBBCWSBinding" type="tns:CEBBCWSPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetDownloadFileList_v2">
+			<soap:operation soapAction="GetDownloadFileList_v2"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="CEBBCError_v2">
+				<soap:fault use="literal" name="CEBBCError_v2"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="StartUploadFileList_v1">
+			<soap:operation soapAction="StartUploadFileList"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="CEBBCError_v2">
+				<soap:fault use="literal" name="CEBBCError_v2"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="FinishUploadFileList_v1">
+			<soap:operation soapAction="FinishUploadFileList"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="CEBBCError_v2">
+				<soap:fault use="literal" name="CEBBCError_v2"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CEBBCWS">
+		<wsdl:port name="CEBBCWSPort" binding="tns:CEBBCWSBinding">
+			<soap:address location="https://${BankAdress}/cebbc/api"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by KBC Group NV (KBC Group NV) -->
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/GetDownloadFileList_v2" elementFormDefault="qualified">
+	<xs:element name="GetDownloadFileListResponse_v2">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="QueryTimestamp" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>Timestamp of the request as recognized by the server.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FileList" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of files matching the given criteria.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FileDetail" type="tns:FileDetail_v1" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TicketId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Unique identification of request</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FileDetail_v1">
+		<xs:sequence>
+			<xs:element name="Url" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Download URL of the file, when file is ready to be downloaded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Filename">
+				<xs:annotation>
+					<xs:documentation>Filename of the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="250"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Type" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>Type of the file (AVIZO, VYPIS, KURZY).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreationDateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time when the file was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size">
+				<xs:annotation>
+					<xs:documentation>Size of the file in bytes.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="9999999999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UploadFileHash" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Only for IMPPROT file type. MD5 hash computed from uploaded file contents to pair protocol file with the uploaded file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Status">
+				<xs:annotation>
+					<xs:documentation>Processing result for particular file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="R">
+							<xs:annotation>
+								<xs:documentation>The file is not ready for download yet, try again later.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="D">
+							<xs:annotation>
+								<xs:documentation>The file is ready, proceed to download</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="F">
+							<xs:annotation>
+								<xs:documentation>File preparation failed permanently, the file cannot be retrieved, contact support.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,18 @@
+# IDE
+/.idea
+
+# Composer
+/vendor
+/composer.lock
+
+# cert folder
+/cert/*
+!/cert/bccert.cnf.dist
+!/cert/Makefile
+
+# Tests
+/temp
+/tests/tmp
+*.actual
+*.expected
+/coverage.xml

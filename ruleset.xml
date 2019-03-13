@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="AsisTeam">
+    <rule ref="./vendor/ninjify/coding-standard/contributte.xml">
+        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden" />
+    </rule>
+
+    <!-- Specific rules -->
+    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+        <properties>
+            <property name="rootNamespaces" type="array" value="
+                src=>AsisTeam\CSOBBC,
+                tests=>AsisTeam\CSOBBC\Tests
+            "/>
+        </properties>
+    </rule>
+
+    <!--Exclude folders -->
+    <exclude-pattern>/tests/tmp</exclude-pattern>
+</ruleset>

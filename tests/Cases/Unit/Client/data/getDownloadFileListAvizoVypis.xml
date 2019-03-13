@@ -1,0 +1,25 @@
+<GetDownloadFileListResponse_v2>
+	<QueryTimestamp>2019-02-05T21:57:32.855</QueryTimestamp>
+	<FileList>
+		<FileDetail>
+			<Url>https://testceb-bc.csob.cz/ceb-mock/download?id=3&amp;name=2019-02-05T21:45.pdf&amp;type=VYPIS
+			</Url>
+			<Filename>2019-02-05T21:45.pdf</Filename>
+			<Type>VYPIS</Type>
+			<CreationDateTime>2019-02-05T21:45:00</CreationDateTime>
+			<Size>89579</Size>
+			<Status>D</Status>
+		</FileDetail>
+		<FileDetail>
+			<Url>https://testceb-bc.csob.cz/ceb-mock/download?id=4&amp;name=2019-02-05T21:45.pdf&amp;type=AVIZO
+			</Url>
+			<Filename>2019-02-05T21:45.pdf</Filename>
+			<Type>AVIZO</Type>
+			<CreationDateTime>2019-02-05T21:45:00</CreationDateTime>
+			<Size>90977</Size>
+			<Status>D</Status>
+		</FileDetail>
+	</FileList>
+	<TicketId>CBAPIceb-int19020521573282700183</TicketId>
+</GetDownloadFileListResponse_v2>
+

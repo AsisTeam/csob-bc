@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by KBC Group NV (KBC Group NV) -->
+<xs:schema xmlns:tns="http://ceb-bc.csob.cz/CEBBCWS/FinishUploadFileList_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ceb-bc.csob.cz/CEBBCWS/FinishUploadFileList_v1" elementFormDefault="qualified">
+	<xs:element name="FinishUploadFileListRequest_v1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ContractNumber" type="xs:long">
+					<xs:annotation>
+						<xs:documentation>Identification of the Contract.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ClientAppGuid">
+					<xs:annotation>
+						<xs:documentation>Globally unique identification of application instance which is performing request.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="36"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="FileList">
+					<xs:annotation>
+						<xs:documentation>List of files successfully uploaded.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FileId" type="tns:FileId_v1" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FileId_v1">
+		<xs:sequence>
+			<xs:element name="Filename">
+				<xs:annotation>
+					<xs:documentation>Filename of the file.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="250"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Hash">
+				<xs:annotation>
+					<xs:documentation>"MD5 hash computed from the file contents.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NewFileId">
+				<xs:annotation>
+					<xs:documentation>"Encoded id returned from POST upload operation.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="2048"/>
+						<xs:pattern value="[a-zA-Z0-9_%-]+"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
