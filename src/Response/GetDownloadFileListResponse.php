@@ -45,9 +45,13 @@ final class GetDownloadFileListResponse extends AbstractResponse
 		self::assertResponse($resp);
 
 		$files = [];
-		if (isset($resp->FileList) && $resp->FileList->FileDetail && is_array($resp->FileList->FileDetail)) {
-			foreach ($resp->FileList->FileDetail as $f) {
-				$files[] = self::fillFile((array) $f);
+		if (isset($resp->FileList) && isset($resp->FileList->FileDetail)) {
+			if (is_array($resp->FileList->FileDetail)) {
+				foreach ($resp->FileList->FileDetail as $f) {
+					$files[] = self::fillFile((array) $f);
+				}
+			} else {
+				$files[] = self::fillFile((array) $resp->FileList->FileDetail);
 			}
 		}
 
