@@ -6,22 +6,45 @@ Can be used for 2 main scenarios:
 1. downloading files from your CEB account (bank account reports, payment advices) and/or 
 2. uploading files containing payment orders information. (signing of the uploaded files by client's certificate must be done before payment is proceeded)
 
-Please see the official [implementation guide](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/csob-business-connector-implementacni-prirucka.pdf) to find out all details: 
+Please see the official [implementation guide](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/csob-business-connector-implementacni-prirucka.pdf) to find out all details:   
 
 ## How to use?
 
 Before you start using this library, you need to have:
-1. generated certificate and key for communication with the API (please follow the instructions in `Makefile` or follow `official guide`).
-2. added and activated previously created certificate and key in CEB application
-3. be sure you know your __contract number__ and __app guid__ (will be needed when creating instance of the CEB client)
+- generated certificate and key for communication with the API (please follow the instructions in `Generating certificate` section or follow `official guide`).
+- added and activated previously created certificate and key in CEB application
+- be sure you know your __contract number__ and __app guid__ (will be needed when creating instance of the CEB client)
 
+__Test environment__
+By setting `Options` `test` param to `true`, test CEB server will be used. 
+
+You can develop against the CEB test environment. You don't need to use valid contract_id and guid from CSOB for the test communication, but guid must be valid uuidv4.
+
+### Generating certificate
+
+Please enter the `cert` directory where `Makefile` and `bccert.cnf.dist` files are present.
+You may use `Makefile` to run desired commands by typing `make command-name`
+
+1. In some text editor open `bccert.cnf.dist` file, change the line 'CN = <BC server>'. Replace <BC server> by your local machine name and save the file as `bccert.cnf`.
+2. run `make generate-request`. It creates `bccert.csr` certificate request file.
+3. Upload `bccert.csr` file to CSOB CEB application and in it's UI generate and download certificate file (name it `bccert.crt`)
+4. run `make generate-cert` and set some passphrase if you wish so. New files `bccert.p12` and `bccert.pem` files should appear in `cert` folder.
+5. use path to `bccert.pem` file and the passphrase you typed before as parameters for creation of Options object.
+
+
+### Example usage 
 ```php
 // use factory to create CEB instance
-$options = new Options('path/to/certificate', 'certPassPhrase', 'contractId', 'appGuid');
-$ceb = (new CEBFactory($options, '/tmp/'))->create();
+// factory creates and registers file readers and generators so you don't have to do it manually
+$options = new Options('path/to/bccert.pem', 'certPassPhrase', 'contractId', 'appGuid');
+$factory = new CEBFactory($options, '/tmp/');
+$ceb = $factory->create();
 
+// returns files from CEB API
 $list = $ceb->listFiles();
 Assert::count(2, $list->getFiles());
+
+// You can read and parse files content
 
 // first one is VYPIS type
 $as = $ceb->downloadAndRead($list->getFiles()[0]);
@@ -34,7 +57,7 @@ Assert::true($adv instanceof IAdvice);
 Assert::count(3, $adv->getTransactions());
 
 // generate and upload payment batch file to CEB
-$payments = []; // create list of IPaymentOrder entities
+$payments = []; // create list of IPaymentOrder entities eg by: new InlandPayment(...)
 $file = $ceb->generatePaymentFile($payments);
 $ceb->upload([$file]);
 ```

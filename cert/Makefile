@@ -1,7 +1,7 @@
 # Process:
 # - open bccert.cnf.dist, change on line 'CN = <BC server>'  <BC server> to your local machine name and save the file as bccert.cnf
 # - run "make generate-request"
-# - upload generated certificate request bccert.csr file to CSOB CEM application, generate and download certificate from there
+# - upload generated certificate request bccert.csr file to CSOB CEB application, generate and download certificate from there
 # - copy downloaded certificate bccert.crt file to this folder
 # - run "make generate-cert"
 # - you will be asked to set password, set some
