@@ -81,13 +81,15 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->originatorAccountNumber;
 	}
 
-	public function setOriginatorAccountNumber(string $originatorAccountNumber): void
+	public function setOriginatorAccountNumber(string $originatorAccountNumber): self
 	{
 		if (strlen($originatorAccountNumber) > 24) {
 			throw new InvalidArgumentException('Originator bank account must not contain more then 24 digits');
 		}
 
 		$this->originatorAccountNumber = trim($originatorAccountNumber);
+
+		return $this;
 	}
 
 	public function getOriginatorReference(): string
@@ -95,9 +97,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->originatorReference;
 	}
 
-	public function setOriginatorReference(string $originatorReference): void
+	public function setOriginatorReference(string $originatorReference): self
 	{
 		$this->originatorReference = substr($originatorReference, 0, 16);
+
+		return $this;
 	}
 
 	public function getDueDate(): DateTimeImmutable
@@ -105,9 +109,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->dueDate;
 	}
 
-	public function setDueDate(DateTimeImmutable $dueDate): void
+	public function setDueDate(DateTimeImmutable $dueDate): self
 	{
 		$this->dueDate = $dueDate;
+
+		return $this;
 	}
 
 	public function getAmount(): Money
@@ -115,13 +121,15 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->amount;
 	}
 
-	public function setAmount(Money $amount): void
+	public function setAmount(Money $amount): self
 	{
 		if (!$amount->isPositive()) {
 			throw new LogicalException('Payment amount must be positive number');
 		}
 
 		$this->amount = $amount;
+
+		return $this;
 	}
 
 	public function getCurrency(): string
@@ -134,9 +142,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->counterpartyIBAN;
 	}
 
-	public function setCounterpartyIban(string $counterpartyIBAN): void
+	public function setCounterpartyIban(string $counterpartyIBAN): self
 	{
 		$this->counterpartyIBAN = trim($counterpartyIBAN);
+
+		return $this;
 	}
 
 	public function getCounterpartySwift(): string
@@ -144,9 +154,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->counterpartySWIFT;
 	}
 
-	public function setCounterpartySwift(string $counterpartySWIFT): void
+	public function setCounterpartySwift(string $counterpartySWIFT): self
 	{
 		$this->counterpartySWIFT = trim($counterpartySWIFT);
+
+		return $this;
 	}
 
 	public function getCounterpartyNameAndAddress(): string
@@ -154,9 +166,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->counterpartyNameAndAddress;
 	}
 
-	public function setCounterpartyNameAndAddress(string $counterpartyNameAndAddress): void
+	public function setCounterpartyNameAndAddress(string $counterpartyNameAndAddress): self
 	{
 		$this->counterpartyNameAndAddress = $counterpartyNameAndAddress;
+
+		return $this;
 	}
 
 	public function getCharge(): string
@@ -164,13 +178,15 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->charge;
 	}
 
-	public function setCharge(string $charge): void
+	public function setCharge(string $charge): self
 	{
 		if (!ForeignPaymentCharge::isValid($charge)) {
 			throw new InvalidArgumentException(sprintf('Given charge type "%s" is invalid', $charge));
 		}
 
 		$this->charge = $charge;
+
+		return $this;
 	}
 
 	public function getPurpose(): string
@@ -178,13 +194,15 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->purpose;
 	}
 
-	public function setPurpose(string $purpose): void
+	public function setPurpose(string $purpose): self
 	{
 		if (strlen($purpose) < 3) {
 			throw new InvalidArgumentException('Purpose of the payment must contain at least 3 characters');
 		}
 
 		$this->purpose = $purpose;
+
+		return $this;
 	}
 
 	public function getCounterpartyBankIdentification(): string
@@ -192,9 +210,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->counterpartyBankIdentification;
 	}
 
-	public function setCounterpartyBankIdentification(string $counterpartyBankIdentification): void
+	public function setCounterpartyBankIdentification(string $counterpartyBankIdentification): self
 	{
 		$this->counterpartyBankIdentification = $counterpartyBankIdentification;
+
+		return $this;
 	}
 
 	public function getBankInstructions(): string
@@ -202,9 +222,11 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->bankInstructions;
 	}
 
-	public function setBankInstructions(string $bankInstructions): void
+	public function setBankInstructions(string $bankInstructions): self
 	{
 		$this->bankInstructions = $bankInstructions;
+
+		return $this;
 	}
 
 	public function getCounterpartyCountry(): string
@@ -212,13 +234,15 @@ final class ForeignPayment implements IPaymentOrder
 		return $this->counterpartyCountry;
 	}
 
-	public function setCounterpartyCountry(string $iso): void
+	public function setCounterpartyCountry(string $iso): self
 	{
 		if (strlen($iso) !== 2) {
 			throw new InvalidArgumentException('Counterparty country must be valid ISO country code.');
 		}
 
 		$this->counterpartyCountry = $iso;
+
+		return $this;
 	}
 
 }

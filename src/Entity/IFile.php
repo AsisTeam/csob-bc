@@ -8,22 +8,54 @@ interface IFile
 {
 
 	public function getFileName(): string;
+
 	public function getHash(): string;
+
 	public function getSize(): int;
+
 	public function getFormat(): string;
+
 	public function getUploadMode(): string;
+
 	public function getType(): ?string;
+
 	public function getSeparator(): ?string;
+
 	public function getCreated(): DateTimeImmutable;
+
 	public function getStatus(): string;
-	public function setStatus(string $status): void;
+
+	/**
+	 * @return mixed
+	 */
+	public function setStatus(string $status);
+
 	public function getDownloadUrl(): ?string;
-	public function setDownloadUrl(?string $url): void;
+
+	/**
+	 * @return mixed
+	 */
+	public function setDownloadUrl(?string $url);
+
 	public function getUploadUrl(): ?string;
-	public function setUploadUrl(?string $url): void;
+
+	/**
+	 * @return mixed
+	 */
+	public function setUploadUrl(?string $url);
+
 	public function getContent(): string;
-	public function setContent(?string $content): void;
-	public function setUpload(?Upload $upload): void;
+
+	/**
+	 * @return mixed
+	 */
+	public function setContent(?string $content);
+
+	/**
+	 * @return mixed
+	 */
+	public function setUpload(?Upload $upload);
+
 	public function getUpload(): ?Upload;
 
 }

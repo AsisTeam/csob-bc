@@ -65,86 +65,114 @@ final class File implements IFile
 		$this->created = new DateTimeImmutable();
 	}
 
-	public function setFileName(string $fileName): void
+	public function setFileName(string $fileName): self
 	{
 		$this->fileName = $fileName;
+
+		return $this;
 	}
 
-	public function setFormat(string $format): void
+	public function setFormat(string $format): self
 	{
 		$this->assertFormat($format);
 		$this->format = $format;
+
+		return $this;
 	}
 
-	public function setUploadMode(string $uploadMode): void
+	public function setUploadMode(string $uploadMode): self
 	{
 		$this->assertUploadMode($uploadMode);
 		$this->uploadMode = $uploadMode;
+
+		return $this;
 	}
 
-	public function setSeparator(string $separator): void
+	public function setSeparator(string $separator): self
 	{
 		$this->assertSeparator($separator);
 		$this->separator = $separator;
+
+		return $this;
 	}
 
-	public function setCreated(DateTimeImmutable $created): void
+	public function setCreated(DateTimeImmutable $created): self
 	{
 		$this->created = $created;
+
+		return $this;
 	}
 
-	public function setType(string $type): void
+	public function setType(string $type): self
 	{
 		$this->assertType($type);
 		$this->type = $type;
+
+		return $this;
 	}
 
-	public function setSize(int $size): void
+	public function setSize(int $size): self
 	{
 		$this->size = $size;
+
+		return $this;
 	}
 
-	public function setHash(string $hash): void
+	public function setHash(string $hash): self
 	{
 		$this->hash = $hash;
+
+		return $this;
 	}
 
-	public function setStatus(string $status): void
+	public function setStatus(string $status): self
 	{
 		$this->status = $status;
+
+		return $this;
 	}
 
-	public function setDownloadUrl(?string $url): void
+	public function setDownloadUrl(?string $url): self
 	{
 		if ($url !== null) {
 			$url = trim($url);
 		}
 
 		$this->downloadUrl = $url;
+
+		return $this;
 	}
 
-	public function setUploadUrl(?string $url): void
+	public function setUploadUrl(?string $url): self
 	{
 		if ($url !== null) {
 			$url = trim($url);
 		}
 
 		$this->uploadUrl = $url;
+
+		return $this;
 	}
 
-	public function setLocation(?string $location): void
+	public function setLocation(?string $location): self
 	{
 		$this->location = $location;
+
+		return $this;
 	}
 
-	public function setContent(?string $content): void
+	public function setContent(?string $content): self
 	{
 		$this->content = $content;
+
+		return $this;
 	}
 
-	public function setUpload(?Upload $upload): void
+	public function setUpload(?Upload $upload): self
 	{
 		$this->upload = $upload;
+
+		return $this;
 	}
 
 	public function getFileName(): string
