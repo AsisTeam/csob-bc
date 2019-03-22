@@ -45,7 +45,7 @@ final class Mt942ReaderTest extends TestCase
 	public function getFiles(): array
 	{
 		return [
-			['AV_example2_utf-8.STA'], // utf-8
+//			['AV_example2_utf-8.STA'], // utf-8
 			['AV_example2_win-1250.STA'], // ascii
 		];
 	}
@@ -59,7 +59,7 @@ final class Mt942ReaderTest extends TestCase
 		Assert::equal('CEKOCZPPAXXX 00000', $adv->getIdentification());
 		Assert::equal('942', $adv->getType());
 		Assert::equal('01', $adv->getPriority());
-		Assert::equal('MAJITEL ÚČTU', $adv->getAccountOwner());
+		Assert::equal('MAJITEL UCTU', $adv->getAccountOwner());
 		Assert::equal('123456789', $adv->getAccountNumber());
 		Assert::equal('CZKD0,', $adv->getDebitLimit());
 

@@ -9,9 +9,7 @@ final class BCHttpClientFactory
 
 	public function create(Options $options): BCHttpClient
 	{
-		$http = new Client([
-			'base_uri' => 'https://ceb-bc.csob.cz/',
-		]);
+		$http = new Client();
 
 		return new BCHttpClient($http, $options);
 	}
