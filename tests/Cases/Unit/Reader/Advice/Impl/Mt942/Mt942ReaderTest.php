@@ -35,7 +35,8 @@ final class Mt942ReaderTest extends TestCase
 
 		Assert::count(11, $lines);
 		Assert::equal('CEKOCZPPAXXX 00000', $lines[0]);
-		Assert::equal(':86:111?00ZIKMUND RYSAVY?20ZAUCT.PLATBA?21000000-0181582348/0300', $lines[7]);
+		$lineWithDiacritics = $lines[8];
+		Assert::equal('?25Sorry jako Šitbořice omluv?26a za zpožděnou platbu', $lineWithDiacritics);
 	}
 
 	/**
@@ -44,8 +45,8 @@ final class Mt942ReaderTest extends TestCase
 	public function getFiles(): array
 	{
 		return [
-			['AV_226047602_20190225_0016-utf8.STA'], // utf-8
-			['AV_226047602_20190225_0016.STA'], // ascii
+			['AV_example2_utf-8.STA'], // utf-8
+			['AV_example2_win-1250.STA'], // ascii
 		];
 	}
 
@@ -135,7 +136,7 @@ final class Mt942ReaderTest extends TestCase
 
 	public function testReadRealSingle(): void
 	{
-		$file = new File(__DIR__ . '/data/AV_226047602_20190225_0016-utf8.STA');
+		$file = new File(__DIR__ . '/data/AV_226047602_20190225_0016.STA');
 		$adv = $this->reader->read($file);
 
 		// header information

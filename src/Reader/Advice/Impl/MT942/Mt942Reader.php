@@ -46,20 +46,31 @@ final class Mt942Reader implements IAdviceReader
 	 */
 	public function readLines(IFile $file): array
 	{
-		$lines = preg_split("/\\r\\n|\\r|\\n/", $file->getContent());
+		$content = $file->getContent();
+		// CSOB sends files in CP1250 encoding, convert it before reading
+		if (mb_detect_encoding($content) !== 'UTF-8') {
+			$content = iconv('CP1250', 'utf-8', $file->getContent());
+
+			if ($content === false) {
+				return [];
+			}
+		}
+
+		$lines = preg_split("/\\r\\n|\\r|\\n/", $content);
 
 		if ($lines === false) {
 			throw new ReaderException('Could not read lines');
 		}
 
 		// avoid empty lines
+		$cleanLines = [];
 		foreach ($lines as $key => $line) {
-			if ($line === '') {
-				unset($lines[$key]);
+			if ($line !== '') {
+				$cleanLines[] = $line;
 			}
 		}
 
-		return $lines;
+		return $cleanLines;
 	}
 
 	/**
