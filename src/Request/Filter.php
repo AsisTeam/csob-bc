@@ -51,9 +51,11 @@ final class Filter
 		return $this->fileName;
 	}
 
-	public function setFileName(?string $fileName): void
+	public function setFileName(?string $fileName): self
 	{
 		$this->fileName = $fileName;
+
+		return $this;
 	}
 
 	public function getCreatedBefore(): ?DateTimeImmutable
@@ -61,9 +63,11 @@ final class Filter
 		return $this->createdBefore;
 	}
 
-	public function setCreatedBefore(?DateTimeImmutable $createdBefore): void
+	public function setCreatedBefore(?DateTimeImmutable $createdBefore): self
 	{
 		$this->createdBefore = $createdBefore;
+
+		return $this;
 	}
 
 	public function getCreatedAfter(): ?DateTimeImmutable
@@ -71,9 +75,11 @@ final class Filter
 		return $this->createdAfter;
 	}
 
-	public function setCreatedAfter(?DateTimeImmutable $createdAfter): void
+	public function setCreatedAfter(?DateTimeImmutable $createdAfter): self
 	{
 		$this->createdAfter = $createdAfter;
+
+		return $this;
 	}
 
 	public function getClientAppGuid(): ?string
@@ -81,9 +87,11 @@ final class Filter
 		return $this->clientAppGuid;
 	}
 
-	public function setClientAppGuid(?string $clientAppGuid): void
+	public function setClientAppGuid(?string $clientAppGuid): self
 	{
 		$this->clientAppGuid = $clientAppGuid;
+
+		return $this;
 	}
 
 }

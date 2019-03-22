@@ -11,7 +11,7 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
-class BCFacadeTestClient extends AbstractTestClient
+class BCFacadeClientTest extends AbstractTestClient
 {
 
 	/** @var BCClientFacade */
@@ -53,4 +53,4 @@ class BCFacadeTestClient extends AbstractTestClient
 
 }
 
-(new BCFacadeTestClient())->run();
+(new BCFacadeClientTest())->run();

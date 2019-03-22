@@ -11,6 +11,7 @@ use AsisTeam\CSOBBC\Entity\Report\IReport;
 use AsisTeam\CSOBBC\Generator\FileGenerator;
 use AsisTeam\CSOBBC\Reader\Advice\Impl\MT942\Mt942Reader;
 use AsisTeam\CSOBBC\Reader\FileReader;
+use AsisTeam\CSOBBC\Reader\Import\Impl\XmlCsob\ImprotReader;
 use AsisTeam\CSOBBC\Reader\Report\Impl\XmlCsob\XmlCsobReader;
 use AsisTeam\CSOBBC\Tests\Cases\Unit\Client\SoapMockHelper;
 use Mockery;
@@ -35,7 +36,7 @@ final class CEBTest extends TestCase
 		);
 
 		$facade    = new BCClientFacade($soapClient, $httpClient);
-		$reader    = new FileReader(new XmlCsobReader(), new Mt942Reader());
+		$reader    = new FileReader(new XmlCsobReader(), new Mt942Reader(), new ImprotReader());
 		$generator = Mockery::mock(FileGenerator::class);
 
 		$ceb  = new CEB($facade, $reader, $generator);

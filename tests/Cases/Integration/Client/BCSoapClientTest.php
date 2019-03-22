@@ -15,7 +15,7 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
-class BCSoapTestClient extends AbstractTestClient
+class BCSoapClientTest extends AbstractTestClient
 {
 
 	/** @var DateTimeImmutable */
@@ -85,4 +85,4 @@ class BCSoapTestClient extends AbstractTestClient
 
 }
 
-(new BCSoapTestClient())->run();
+(new BCSoapClientTest())->run();

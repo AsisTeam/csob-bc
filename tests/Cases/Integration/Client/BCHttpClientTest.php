@@ -9,7 +9,7 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
-class BCHttpTestClient extends AbstractTestClient
+class BCHttpClientTest extends AbstractTestClient
 {
 
 	public function testDownloadFile(): void
@@ -39,4 +39,4 @@ class BCHttpTestClient extends AbstractTestClient
 
 }
 
-(new BCHttpTestClient())->run();
+(new BCHttpClientTest())->run();

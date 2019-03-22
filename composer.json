@@ -20,7 +20,8 @@
     "ext-iconv": "*",
     "moneyphp/money": "^3.2",
     "ext-simplexml": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "ext-dom": "*"
   },
   "require-dev": {
     "ninjify/qa": "^0.8.0",

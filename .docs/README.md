@@ -60,6 +60,13 @@ Assert::count(3, $adv->getTransactions());
 $payments = []; // create list of IPaymentOrder entities eg by: new InlandPayment(...)
 $file = $ceb->generatePaymentFile($payments);
 $ceb->upload([$file]);
+
+// search for import protocol files only and read the first one
+$filter = new Filter();
+$filter->setFileTypes([FileTypeEnum::IMPPROT]);
+$files = $this->ceb->listFiles(null, $filter);
+$protocol = $this->ceb->downloadAndRead($files->getFiles[0]);
+Assert::true($protocol->isOk());
 ```
 
 ## File formats
@@ -71,6 +78,7 @@ Currently implemented file formats are:
 - payment order: _TXT_ - [txt format definition](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/formats/zadani-platb-txt.pdf)
 - payment reports: _XML CSOB_ - [xml csob format definition](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/formats/report-xml-csob.pdf)
 - payment advises: _MT942_ - [mt942 format definition](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/formats/aviza-mt942.pdf)
+- import protocol: _XML CSOB_ - [implementation guide](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/csob-business-connector-implementacni-prirucka.pdf)
 
 Please visit [.docs/official/formats](https://github.com/AsisTeam/csob-bc/blob/master/.docs/official/formats/) to see official documentation for these formats if cannot be found on official website.
 
@@ -78,8 +86,9 @@ If you prefer different file format for communication with CSOB bank, you can ma
 - Payment Orders `src/Generator/Payment/Impl/YourPaymentOrderGenerator` that implements `IPaymentFileGenerator` interface
 - Advises `src/Reader/Advice/Impl/YourAdviceReader` that implements `IAdviceReader` interface
 - Reports `src/Reader/Report/Impl/YourReportReader` that implements `IReportReader` interface
+- ImportProtocols `src/Reader/Import/Impl/YourReportReader` that implements `IImportProtocolReader` interface
 
-Note: historically there was also implemented `XmlCBA` report read that was abandoned, but it's implementation still resided in `xml-cba-report` GIT branch. It extracts the data from XmlCBA file format but does not implement `IReportReader` interface properly, thus it must be edited before using it to comply with this interface.
+Note: historically there was also implemented `XmlCBA` report reader that was abandoned, but it's implementation still resided in `xml-cba-report` GIT branch. It extracts the data from XmlCBA file format but does not implement `IReportReader` interface properly, thus it must be edited before using it to comply with this interface.
 
 When you use CEBFactory, formats listed above will be used. If you wish to use different format, implement it first and then override corresponding methods in CEBFactory class. 
 

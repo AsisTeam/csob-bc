@@ -5,6 +5,7 @@ namespace AsisTeam\CSOBBC;
 use AsisTeam\CSOBBC\Client\BCClientFacade;
 use AsisTeam\CSOBBC\Entity\Advice\IAdvice;
 use AsisTeam\CSOBBC\Entity\IFile;
+use AsisTeam\CSOBBC\Entity\ImportProtocol\IImportProtocol;
 use AsisTeam\CSOBBC\Entity\IPaymentOrder;
 use AsisTeam\CSOBBC\Entity\Report\IReport;
 use AsisTeam\CSOBBC\Exception\Runtime\ReaderException;
@@ -67,18 +68,23 @@ final class CEB
 	}
 
 	/**
-	 * @return IAdvice|IReport
+	 * @return IAdvice|IReport|IImportProtocol
 	 */
 	public function downloadAndRead(IFile $file)
+	{
+		$file->setContent($this->download($file));
+
+		return $this->reader->read($file);
+	}
+
+
+	public function download(IFile $file): string
 	{
 		if ($file->getDownloadUrl() === null) {
 			throw new ReaderException('Unable to download and read file. No "downloadUrl"');
 		}
 
-		$content = $this->api->download($file->getDownloadUrl());
-		$file->setContent($content);
-
-		return $this->reader->read($file);
+		return $this->api->download($file->getDownloadUrl());
 	}
 
 }
