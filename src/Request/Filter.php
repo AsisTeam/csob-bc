@@ -35,7 +35,7 @@ final class Filter
 	/**
 	 * @param string[] $fileTypes
 	 */
-	public function setFileTypes(array $fileTypes): void
+	public function setFileTypes(array $fileTypes): self
 	{
 		foreach ($fileTypes as $type) {
 			if (!FileTypeEnum::isValid($type)) {
@@ -44,6 +44,8 @@ final class Filter
 		}
 
 		$this->fileTypes = $fileTypes;
+
+		return $this;
 	}
 
 	public function getFileName(): ?string
