@@ -99,7 +99,7 @@ Extension will create all client factories as services
 
 ### Usage
 
-```neon
+```yml
 extensions:
     ceb: AsisTeam\CSOBBC\DI\CsobBusinessConnectorExtension
 
