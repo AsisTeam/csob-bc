@@ -105,11 +105,11 @@ extensions:
 
 ceb:
     
-    # temp directory
+    # temp directory - set null or not present for `sys_get_temp_dir()`
     tmp_dir: path/to/tmp/dir
     
     # certificate location
-    cert_path: path/to/cert/bccert.pem'
+    cert_path: path/to/cert/bccert.pem
     
     # certificate passphrase
     passphrase: ""
@@ -120,6 +120,6 @@ ceb:
     # Appl GUID
     guid: ""
     
-    # run in test environment
+    # run in test environment - default is FALSE
     test: false
 ```
