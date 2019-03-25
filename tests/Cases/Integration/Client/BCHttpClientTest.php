@@ -29,7 +29,7 @@ class BCHttpClientTest extends AbstractTestClient
 		$file = new File(__DIR__ . '/../../../Cases/Unit/Client/file/example1.txt');
 		$file->setStatus(FileStatusEnum::UPLOAD_AVAILABLE);
 		$file->setFormat(FileFormatEnum::TXT_ZPS);
-		$file->setDownloadUrl('https://testceb-bc.csob.cz/ceb-mock/upload?type=OnlyCorrect&size=70');
+		$file->setUploadUrl('https://testceb-bc.csob.cz/ceb-mock/upload?type=OnlyCorrect&size=70');
 
 		$uplFile = $this->httpClient->upload($file);
 

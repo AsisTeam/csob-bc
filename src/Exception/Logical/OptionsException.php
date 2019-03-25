@@ -2,9 +2,7 @@
 
 namespace AsisTeam\CSOBBC\Exception\Logical;
 
-use LogicException;
-
-class InvalidArgumentException extends LogicException
+class OptionsException extends InvalidArgumentException
 {
 
 }

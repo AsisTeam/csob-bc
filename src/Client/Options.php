@@ -2,6 +2,8 @@
 
 namespace AsisTeam\CSOBBC\Client;
 
+use AsisTeam\CSOBBC\Exception\Logical\OptionsException;
+
 final class Options
 {
 
@@ -28,6 +30,9 @@ final class Options
 		bool $test = false
 	)
 	{
+		$this->assertCertFile($certPath);
+		$this->assertGuid($clientAppGuid);
+
 		$this->certPath       = $certPath;
 		$this->certPassphrase = $certPassphrase;
 		$this->contractNo     = $contractNo;
@@ -58,6 +63,22 @@ final class Options
 	public function isTest(): bool
 	{
 		return $this->test;
+	}
+
+	private function assertCertFile(string $certPath): void
+	{
+		if (!file_exists($certPath)) {
+			throw new OptionsException(sprintf('File "%s" does not exist.', $certPath));
+		}
+	}
+
+	private function assertGuid(string $clientAppGuid): void
+	{
+		if (strlen($clientAppGuid) !== 36 ||
+			preg_match('/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/', $clientAppGuid) !== 1
+		) {
+			throw new OptionsException(sprintf('AppGUID must be valid UUIDv4 string. "%s" given.', $clientAppGuid));
+		}
 	}
 
 }

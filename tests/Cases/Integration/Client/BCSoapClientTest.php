@@ -18,26 +18,15 @@ require_once __DIR__ . '/../../../bootstrap.php';
 class BCSoapClientTest extends AbstractTestClient
 {
 
-	/** @var DateTimeImmutable */
-	private $now;
-
 	public function setUp(): void
 	{
 		parent::setUp();
-
-		$this->now = new DateTimeImmutable();
 	}
 
 	public function testGetFiles(): void
 	{
 		$resp = $this->soapClient->getFiles();
 		$this->assertNonEmptyGetDownloadFileList($resp);
-	}
-
-	public function testGetFilesWithSinceParam(): void
-	{
-		$since = (new DateTimeImmutable(''))->modify('-5 days');
-		$this->assertNonEmptyGetDownloadFileList($this->soapClient->getFiles($since));
 	}
 
 	public function testGetFilesWithFilter(): void
@@ -78,7 +67,6 @@ class BCSoapClientTest extends AbstractTestClient
 
 	private function assertNonEmptyGetDownloadFileList(GetDownloadFileListResponse $resp): void
 	{
-		Assert::true($resp->getDate()->getTimestamp() >= $this->now->getTimestamp());
 		Assert::true(strlen($resp->getTicketId()) > 0);
 		Assert::true(count($resp->getFiles()) > 0);
 	}
