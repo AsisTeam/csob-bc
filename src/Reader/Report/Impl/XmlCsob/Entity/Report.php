@@ -13,6 +13,10 @@ use SimpleXMLElement;
 final class Report implements IReport
 {
 
+	// positive / negative balance indicator
+	private const INDICATOR_C = 'C';
+	private const INDICATOR_D = 'D';
+	
 	/** @var string */
 	private $serialNo = '';
 
@@ -30,9 +34,15 @@ final class Report implements IReport
 
 	/** @var Money */
 	private $amountStart;
+	
+	/** @var string */
+	private $amountStartIndicator;
 
 	/** @var Money */
 	private $amountEnd;
+	
+	/** @var string */
+	private $amountEndIndicator;
 
 	/** @var string */
 	private $frequency = '';
@@ -68,7 +78,9 @@ final class Report implements IReport
 
 		$currency            = (string) $xml->FINSTA03->S60_MENA;
 		$report->amountStart = XmlCsobReader::createMoney((string) $xml->FINSTA03->S60_CASTKA, $currency);
+		$report->amountStartIndicator = (string) $xml->FINSTA03->S60_CD_INDIK;
 		$report->amountEnd = XmlCsobReader::createMoney((string) $xml->FINSTA03->S62_CASTKA, $currency);
+		$report->amountEndIndicator = (string) $xml->FINSTA03->S62_CD_INDIK;
 
 		foreach ($xml->FINSTA03->FINSTA05 as $item) {
 			$report->addEntry(ReportEntry::fromXml($item));
@@ -117,6 +129,11 @@ final class Report implements IReport
 	{
 		return $this->amountStart;
 	}
+	
+	public function isAmountStartNegative(): bool
+	{
+		return $this->amountStartIndicator === self::INDICATOR_D;
+	}
 
 	public function getDateEnd(): DateTimeImmutable
 	{
@@ -126,6 +143,11 @@ final class Report implements IReport
 	public function getAmountEnd(): Money
 	{
 		return $this->amountEnd;
+	}
+	
+	public function isAmountEndNegative(): bool
+	{
+		return $this->amountEndIndicator === self::INDICATOR_D;
 	}
 
 }
