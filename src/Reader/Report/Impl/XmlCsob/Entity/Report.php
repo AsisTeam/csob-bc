@@ -82,7 +82,7 @@ final class Report implements IReport
 		$report->amountEndIndicator = (string) $xml->FINSTA03->S62_CD_INDIK;
 
 		foreach ($xml->FINSTA03->FINSTA05 as $item) {
-			$report->addEntry(ReportEntry::fromXml($item));
+			$report->addEntry(ReportEntry::fromXml($item, $report));
 		}
 
 		return $report;
