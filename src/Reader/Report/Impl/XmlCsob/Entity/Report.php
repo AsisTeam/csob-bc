@@ -14,9 +14,8 @@ final class Report implements IReport
 {
 
 	// positive / negative balance indicator
-	private const INDICATOR_C = 'C';
 	private const INDICATOR_D = 'D';
-	
+
 	/** @var string */
 	private $serialNo = '';
 
@@ -34,13 +33,13 @@ final class Report implements IReport
 
 	/** @var Money */
 	private $amountStart;
-	
+
 	/** @var string */
 	private $amountStartIndicator;
 
 	/** @var Money */
 	private $amountEnd;
-	
+
 	/** @var string */
 	private $amountEndIndicator;
 
@@ -129,7 +128,7 @@ final class Report implements IReport
 	{
 		return $this->amountStart;
 	}
-	
+
 	public function isAmountStartNegative(): bool
 	{
 		return $this->amountStartIndicator === self::INDICATOR_D;
@@ -144,7 +143,7 @@ final class Report implements IReport
 	{
 		return $this->amountEnd;
 	}
-	
+
 	public function isAmountEndNegative(): bool
 	{
 		return $this->amountEndIndicator === self::INDICATOR_D;
