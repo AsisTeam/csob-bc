@@ -31,6 +31,7 @@ final class XmlCsobReader implements IReportReader
 		$amount = str_replace(',', '', $amount);
 		$amount = str_replace('+', '', $amount);
 		$amount = str_replace('-', '', $amount);
+		$amount = \ltrim($amount, '0');
 
 		return new Money($amount, new Currency($currency));
 	}
