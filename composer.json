@@ -15,7 +15,7 @@
     "ext-soap": "*",
     "php": ">= 7.1",
     "nette/di": "^2.4 || ~3.0.0",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^7.0",
     "ext-curl": "*",
     "ext-iconv": "*",
     "moneyphp/money": "^4.0",
