@@ -15,8 +15,10 @@ interface IReport
 
 	public function getDateStart(): ?DateTimeImmutable;
 	public function getAmountStart(): Money;
+	public function isAmountStartNegative(): bool;
 	public function getDateEnd(): DateTimeImmutable;
 	public function getAmountEnd(): Money;
+	public function isAmountEndNegative(): bool;
 
 	/** @return IReportEntry[] */
 	public function getEntries(): array;
