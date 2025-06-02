@@ -18,7 +18,7 @@
     "guzzlehttp/guzzle": "^7.0",
     "ext-curl": "*",
     "ext-iconv": "*",
-    "moneyphp/money": "^3.2",
+    "moneyphp/money": "^4.0",
     "ext-simplexml": "*",
     "ext-libxml": "*",
     "ext-dom": "*"
