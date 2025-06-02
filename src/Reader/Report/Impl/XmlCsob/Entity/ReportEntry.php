@@ -2,6 +2,7 @@
 
 namespace AsisTeam\CSOBBC\Reader\Report\Impl\XmlCsob\Entity;
 
+use AsisTeam\CSOBBC\Entity\Report\IReport;
 use AsisTeam\CSOBBC\Entity\Report\IReportEntry;
 use AsisTeam\CSOBBC\Reader\Report\Impl\XmlCsob\XmlCsobReader;
 use DateTimeImmutable;
@@ -69,11 +70,11 @@ final class ReportEntry implements IReportEntry
 	/** @var string|null */
 	private $rate;
 
-	public static function fromXml(SimpleXMLElement $el): self
+	public static function fromXml(SimpleXMLElement $el, IReport $report): self
 	{
 		$entry = new self();
 
-		$entry->id             = (string) $el->FACAERQ;
+		$entry->id             = (string) $el->S28_POR_CISLO . '/' . $report->getSerialNo() . '/' . $report->getDateEnd()->format('Y');
 		$entry->type           = (string) $el->DOM_ZAHR;
 		$entry->indicator      = (string) $el->S61_CD_INDIK;
 		$entry->accountOwner   = (string) $el->PART_ACC_ID;
